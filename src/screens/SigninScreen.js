@@ -10,9 +10,13 @@ function SigninScreen(props) {
     const { loading, error, userInfo } = userSignin;
     const dispatch = useDispatch();
 
+    const redirect = props.location.search
+        ? props.location.search.split('=')[1]
+        : '/';
+
     useEffect(() => {
         if (userInfo) {
-            props.history.push('/');
+            props.history.push(redirect);
         }
     }, [userInfo]);
 
@@ -37,6 +41,7 @@ function SigninScreen(props) {
                             type="email"
                             name="email"
                             id="email"
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         ></input>
                     </li>
@@ -46,6 +51,7 @@ function SigninScreen(props) {
                             type="password"
                             id="password"
                             name="password"
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         ></input>
                     </li>
@@ -57,7 +63,11 @@ function SigninScreen(props) {
                     <li>New to amazen?</li>
                     <li>
                         <Link
-                            to="/register"
+                            to={
+                                redirect === '/'
+                                    ? 'register'
+                                    : 'register?redirect=' + redirect
+                            }
                             className="button secondary text-center"
                         >
                             Create your amazona account

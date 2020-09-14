@@ -12,10 +12,13 @@ function RegisterScreen(props) {
     const userRegister = useSelector((state) => state.userRegister);
     const { loading, error, userInfo } = userRegister;
     const dispatch = useDispatch();
+    const redirect = props.location.search
+        ? props.location.search.split('=')[1]
+        : '/';
 
     useEffect(() => {
         if (userInfo) {
-            props.history.push('/');
+            props.history.push(redirect);
         }
     }, [userInfo]);
 
@@ -40,6 +43,7 @@ function RegisterScreen(props) {
                             type="name"
                             name="name"
                             id="name"
+                            value={name}
                             onChange={(e) => setName(e.target.value)}
                         ></input>
                     </li>
@@ -49,6 +53,7 @@ function RegisterScreen(props) {
                             type="email"
                             name="email"
                             id="email"
+                            value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         ></input>
                     </li>
@@ -58,6 +63,7 @@ function RegisterScreen(props) {
                             type="password"
                             id="password"
                             name="password"
+                            value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         ></input>
                     </li>
@@ -67,6 +73,7 @@ function RegisterScreen(props) {
                             type="password"
                             id="rePassword"
                             name="rePassword"
+                            value={rePassword}
                             onChange={(e) => setRePassword(e.target.value)}
                         ></input>
                     </li>
@@ -77,7 +84,16 @@ function RegisterScreen(props) {
                     </li>
                     <li>
                         Already have an account?{' '}
-                        <Link to="/signin">Sign-in</Link>
+                        <Link
+                            to={
+                                redirect === '/'
+                                    ? 'signin'
+                                    : 'sigin?redirect=' + redirect
+                            }
+                            className="button secondary text-center"
+                        >
+                            Sign-In
+                        </Link>
                     </li>
                 </ul>
             </form>

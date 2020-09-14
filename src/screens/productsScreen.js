@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     saveProduct,
     listProducts,
     deleteProduct,
 } from '../actions/productActions';
-import { set } from 'js-cookie';
 
 function ProductsScreen(props) {
     const [modalVisible, setModalVisible] = useState(false);
