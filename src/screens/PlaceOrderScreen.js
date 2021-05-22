@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
+import { createOrder } from '../actions/orderActions';
 
 function PlaceOrderScreen(props) {
     const cart = useSelector((state) => state.cart);
     const { cartItems, shipping, payment } = cart;
+
+    const orderCreate = useSelector((state) => state.orderCreate);
+    const { loading, success, order, error } = orderCreate;
 
     if (!shipping.address) {
         props.history.push('/shipping');
@@ -13,9 +17,27 @@ function PlaceOrderScreen(props) {
         props.history.push('/payment');
     }
 
+    const dispatch = useDispatch();
+
     const placeOrderHandler = () => {
-        // create order
+        dispatch(
+            createOrder({
+                orderItems: cartItems,
+                shipping,
+                payment,
+                itemsPrice,
+                shippingPrice,
+                taxPrice,
+                totalPrice,
+            })
+        );
     };
+
+    useEffect(() => {
+        if (success) {
+            props.history.push('/order/' + order._id);
+        }
+    }, [success]);
 
     const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
     const shippingPrice = itemsPrice > 100 ? 0 : 10;
@@ -24,7 +46,7 @@ function PlaceOrderScreen(props) {
 
     return (
         <div>
-            <CheckoutSteps step1 step2 step3 />
+            <CheckoutSteps step1 step2 step3 step4 />
             <div className="placeorder">
                 <div className="placeorder-info">
                     <div>

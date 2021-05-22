@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct } from '../actions/productActions';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { detailsProduct } from "../actions/productActions";
 
 function ProductScreen(props) {
     const [qty, setQty] = useState(1);
@@ -14,7 +14,7 @@ function ProductScreen(props) {
     }, []);
 
     const handleAddToCart = () => {
-        props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
+        props.history.push("/cart/" + props.match.params.id + "?qty=" + qty);
     };
 
     return (
@@ -37,7 +37,7 @@ function ProductScreen(props) {
                                 <h4>{product.name}</h4>
                             </li>
                             <li>
-                                {product.rating} Stars ({product.numReviews}{' '}
+                                {product.rating} Stars ({product.numReviews}{" "}
                                 Reviews)
                             </li>
                             <li>
@@ -53,13 +53,13 @@ function ProductScreen(props) {
                         <ul>
                             <li>Price: {product.price}</li>
                             <li>
-                                Status:{' '}
+                                Status:{" "}
                                 {product.countInStock > 0
-                                    ? 'Available'
-                                    : 'Out Of Stars'}
+                                    ? "Available"
+                                    : "Out Of Stock"}
                             </li>
                             <li>
-                                Qty:{' '}
+                                Qty:{" "}
                                 <select
                                     value={qty}
                                     onChange={(e) => {
