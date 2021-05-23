@@ -13,8 +13,8 @@ import {
     PRODUCT_DELETE_FAILURE,
 } from "../constants/productConstants";
 import axios from "axios";
-// axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+// axios.defaults.baseURL = "http://localhost:5000";
 const listProducts = () => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_LIST_REQUEST });
